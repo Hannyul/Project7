@@ -89,7 +89,7 @@ public class GaleShapely {
             for (int j = 0; j < MalePreferences[singleINDX].length; j++) {
                 int nextBestMatch = MalePreferences[singleINDX][j];
 
-                System.out.println("\t\t"+"proposing to.... " + FemaleNames[nextBestMatch]);
+                System.out.println("\n\t\t"+"proposing to.... " + FemaleNames[nextBestMatch]);
                 //  System.out.println("He prefers " + FemaleNames[nextBestMatch]);
 
                 // if this female is single AND she has not rejected him before:
