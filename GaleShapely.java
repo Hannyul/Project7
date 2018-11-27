@@ -19,7 +19,6 @@ public class GaleShapely {
         //  String[] MaleNames = {"Andy", "Brad", "Caleb", "Daniel", "Ethan"};
         ///             0         1         2        3        4
 //        String[] FemaleNames = {"Lucy", "Madison", "Natalie", "Olivia", "Peyton"};
-
         int[][] MalePreferences = {
             // Andy's preferences:
             {3, 1, 2, 0, 4},
@@ -48,7 +47,6 @@ public class GaleShapely {
             {1, 4, 0, 2, 3}
         };
 
-
         StableMarraige(MalePreferences, FemalePreferences);
 
     }
@@ -70,7 +68,6 @@ public class GaleShapely {
         // matrix to store all the females that rejected each guy:
         int[][] rejectedBy = new int[MalePreferences.length][MalePreferences[0].length];
 
-
         for (int i = 0; i < rejectedBy.length; i++) {
             for (int j = 0; j < rejectedBy[0].length; j++) {
                 rejectedBy[i][j] = -1;
@@ -80,26 +77,19 @@ public class GaleShapely {
             FemaleMatches[i] = -1;
             MaleMatches[i] = -1;
         }
-        int singleINDX = 1000;
-        for (int i = 0; i < MaleMatches.length; i++) {
-            // if this guy is single
-            if (MaleMatches[i] == -1) {
-                singleINDX = i;
-                break;
-            }
-
-        }
-        System.out.println(MaleNames[singleINDX] + " is single");
+        int singleINDX = findSingleMale(MaleMatches, 0);
         while (singleINDX != -1) {
+        System.out.println("\n\n\n");
+
+            System.out.println(MaleNames[singleINDX] + " is single");
 
             //System.out.println("current SINGLE DUUUUUUUDE: "+MaleNames[singleINDX]);
-
             //  System.out.println("now at: " + MaleNames[i]);
             // get his next best match
             for (int j = 0; j < MalePreferences[singleINDX].length; j++) {
                 int nextBestMatch = MalePreferences[singleINDX][j];
 
-                System.out.println("proposing to.... " + FemaleNames[nextBestMatch]);
+                System.out.println("\t\t"+"proposing to.... " + FemaleNames[nextBestMatch]);
                 //  System.out.println("He prefers " + FemaleNames[nextBestMatch]);
 
                 // if this female is single AND she has not rejected him before:
@@ -112,21 +102,18 @@ public class GaleShapely {
                     FemaleMatches[nextBestMatch] = singleINDX;
                     // mark this guy as taken:
                     MaleMatches[singleINDX] = nextBestMatch;
-                    System.out.println(couples[singleINDX][0] + " matched with " + couples[singleINDX][1]);
+                    System.out.println("\t\t"+couples[singleINDX][0] + " matched with " + couples[singleINDX][1]);
                     // ignore i's other preferences as he is now taken
                     break;
 
-
                 }
-
 
                 // if this female HAS rejected him before:
                 if (rejectedBy[singleINDX][nextBestMatch] == 1) {
 //                    System.out.println("herererereere");
-                    System.out.println(FemaleNames[nextBestMatch] + " rejected " + MaleNames[singleINDX]);
+                    System.out.println("\t\t"+FemaleNames[nextBestMatch] + " rejected " + MaleNames[singleINDX]);
                     // get the next best match:
                     continue;
-
 
                 }
                 if (FemaleMatches[nextBestMatch] == -1 && rejectedBy[singleINDX][nextBestMatch] != -1) {
@@ -135,7 +122,6 @@ public class GaleShapely {
                 } else {
 
 //                    System.out.println("herererereere");
-
                     // if the next best match is NOT single:
                     if (FemaleMatches[nextBestMatch] != -1) {
 //                        System.out.println("Aaaaaaaaa");
@@ -150,7 +136,6 @@ public class GaleShapely {
                         // get current guy's index:
 //                        System.out.println("current SINGLE guy: " + MaleNames[singleINDX]);
 
-
                         for (int k = 0; k < FemalePreferences[nextBestMatch].length; k++) {
                             // System.out.println("now checking " + MaleNames[FemalePreferences[nextBestMatch][k]] + ", his index is " + k);
                             if (FemalePreferences[nextBestMatch][k] == singleINDX) {
@@ -164,50 +149,43 @@ public class GaleShapely {
                         }
 
                         //    System.out.println(FemaleNames[nextBestMatch] + " is currently with " + MaleNames[currentMatch]);
-
                         if (currentMatch == 0) {
 
-
                             rejectedBy[singleINDX][nextBestMatch] = 1;
-                             System.out.println(FemaleNames[nextBestMatch] + " rejected " + MaleNames[singleINDX]);
+                            System.out.println("\t\t>>>"+FemaleNames[nextBestMatch] + " rejected " + MaleNames[singleINDX]);
                             break;
                         }
 //                        System.out.println("current guy: " + MaleNames[currentGuy]);
 
                         if (currentGuy < currentMatch) {
 //                            System.out.println("hehehehehehhelHSUFHISUDHFIUDSHFIUSDHF");
-                            System.out.println(FemaleNames[nextBestMatch] + " prefers the current single guy (" + MaleNames[FemalePreferences[nextBestMatch][currentGuy]] + ") over her current match (" + MaleNames[FemalePreferences[nextBestMatch][currentMatch]] + ")");
+                            System.out.println("\t\t>>>"+FemaleNames[nextBestMatch] + " prefers the current single guy (" + MaleNames[FemalePreferences[nextBestMatch][currentGuy]] + ") over her current match (" + MaleNames[FemalePreferences[nextBestMatch][currentMatch]] + ")");
                             // mark this guy as taken
                             couples[singleINDX][1] = FemaleNames[nextBestMatch];
                             // mark her as taken by some guy with index i
                             FemaleMatches[nextBestMatch] = singleINDX;
                             // mark this guy as taken:
                             MaleMatches[singleINDX] = nextBestMatch;
-                            System.out.println(couples[singleINDX][0] + " matched with " + couples[singleINDX][1]);
+                            System.out.println("\t\t"+couples[singleINDX][0] + " matched with " + couples[singleINDX][1]);
                             int previousMatch = FemalePreferences[nextBestMatch][currentMatch];
                             rejectedBy[previousMatch][nextBestMatch] = 1;
-                             System.out.println(FemaleNames[nextBestMatch] + " rejected " + MaleNames[previousMatch]);
+                            System.out.println("\t\t>>>"+FemaleNames[nextBestMatch] + " rejected " + MaleNames[previousMatch]);
                             // make previous match single:
                             MaleMatches[previousMatch] = -1;
                             break;
 
-
-
-
                         } else {
-                            System.out.println(FemaleNames[nextBestMatch] + " prefers her current match  (" + MaleNames[FemalePreferences[nextBestMatch][currentMatch]] + ") over  the current single guyh (" + MaleNames[FemalePreferences[nextBestMatch][currentGuy]] + ")");
+                            System.out.println("\t\t>>>"+FemaleNames[nextBestMatch] + " prefers her current match  (" + MaleNames[FemalePreferences[nextBestMatch][currentMatch]] + ") over  the current single guyh (" + MaleNames[FemalePreferences[nextBestMatch][currentGuy]] + ")");
 
 //                            System.out.println("ellelelelellelelelelelellele");
 //                            System.out.println("this index: " + singleINDX + "              " + MaleNames[singleINDX]);
                             MaleMatches[singleINDX] = -1;
 //                            System.out.println("MaleMatches[i] = " + MaleMatches[singleINDX]);
                             rejectedBy[singleINDX][nextBestMatch] = 1;
-                           
+
                             //nextBestMatch+=1;
                             break;
                         }
-
-
 
                     }
 //           else {
@@ -217,40 +195,42 @@ public class GaleShapely {
 //                        break;
 //                    }
 
-
                 }
-
 
             }
 
+            singleINDX = findSingleMale(MaleMatches, singleINDX);
 
+        }
 
-            for (int i = 0; i < MaleMatches.length; i++) {
-                // if this guy is single
-                if (MaleMatches[i] == -1 && singleINDX != i) {
-                    singleINDX = i;
-                    System.out.println(MaleNames[singleINDX] + " is single");
-                    break;
-                }
-                // if we reach the last index:
-                if (i + 1 == MaleMatches.length) {
+        return couples;
+
+    }
+
+    public static int findSingleMale(int[] MaleMatches, int singleINDX) {
+
+        for (int i = 0; i < MaleMatches.length; i++) {
+            // if this guy is single
+            if (MaleMatches[i] == -1 && singleINDX != i) {
+                singleINDX = i;
+
+                break;
+            }
+            // if we reach the last index:
+            if (i + 1 == MaleMatches.length) {
 //                    System.out.println("MaleMatches[i] = " + MaleMatches[i]);
+                if (MaleMatches[i] == -1) {
+                    singleINDX = i;
+
+                } else {
+
                     if (MaleMatches[i] == -1) {
                         singleINDX = i;
-                        System.out.println(MaleNames[singleINDX] + " is single");
-
-                    } else {
-
-
-                        if (MaleMatches[i] == -1) {
-                            singleINDX = i;
-                        }
+                    }
 //                        System.out.println("herehrelalalalaAAAAAAA");
-                        singleINDX = -1;
+                    singleINDX = -1;
 
-
-
-                        /*
+                    /*
                          *   if(MaleMatches[i] != -1){
                         
                          singleINDX = -1;
@@ -260,31 +240,11 @@ public class GaleShapely {
                          singleINDX=i;
                         
                          }
-                         */
-
-
-
-                    }
+                     */
                 }
             }
-
-
         }
-
-
-        return couples;
-
-    }
-
-    public static int someoneIsSingle(String[][] couples) {
-        for (int i = 0; i < couples.length; i++) {
-            System.out.println("Now at: " + couples[i][0]);
-            System.out.println("couples[i][1]: " + couples[i][1]);
-            if (couples[i][1].equals("NO MATCH")) {
-                return i;
-            }
-        }
-        return -1;
+        return singleINDX;
 
     }
 }
