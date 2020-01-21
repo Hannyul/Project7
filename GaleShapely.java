@@ -1,14 +1,6 @@
 /*
 
-Group Members:
-
-Hana'a Al-Lohibi            
-Bashair Atif Abdulrazak       
-Maha Osama        
-
-Algorithms and Data Structures
-Section CH 
-Project 7 - Implementing Gale Shapely's Algorithm
+ Implementing Gale Shapely's Algorithm
 
  */
 package galeshapely;
